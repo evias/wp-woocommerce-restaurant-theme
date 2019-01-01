@@ -10,21 +10,51 @@ function enqueue_child_theme_styles() {
 function add_orders_ajax_call(){ ?>
  
 <script>
-jQuery(document).ready(function($) {
- 
-    $.ajax({
+// globalize the counter to each page load
+var current_count_orders = -1;
+
+var api_check_orders = function() {
+   $.ajax({
         url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
         data: {
-            'action': 'check_orders', // This is our PHP function below
+            'action': 'check_orders'
         },
         success:function(data) {
-			// This outputs the result of the ajax request (The Callback)
-            window.alert(data);
+            if (typeof data == 'string') {
+                try {
+                    data = JSON.parse(data);
+                }
+                catch(e) { console.log("Error in JSON: ", e); return false; }
+            }
+
+            let cnt = parseInt(data.count);
+
+            console.log("Count: ", cnt);
+
+            if (current_count_orders < 0) {
+                current_count_orders = cnt;
+                return false; // fresh reload
+            }
+
+            if (cnt > current_count_orders) {
+                console.log("Time to bell!!! RIIINNGG");
+                //XXX ring <audio>
+
+                current_count_orders = cnt;
+            }
         },  
         error: function(errorThrown){
-            window.alert(errorThrown);
+            console.log("Error: ", errorThrown);
         }
-    }); 
+    });
+};
+
+jQuery(document).ready(function($) {
+ 
+    setInterval(api_check_orders, 20000);
+
+    // open the dance..
+    api_check_orders();
 });
 </script>
 <?php } 
@@ -35,9 +65,20 @@ function check_orders() {
  
 	global $wpdb;
 
-    $results = $wpdb->get_results( "SELECT count(*) FROM {$wpdb->prefix}posts WHERE post_type = 'shop_order'", OBJECT );
-    print_r($results); 
-	exit;
+    // Read total number of orders
+    $results = $wpdb->get_results( "SELECT count(*) as cnt_orders FROM {$wpdb->prefix}posts WHERE post_type = 'shop_order'", OBJECT );
+
+    $json = "{}";
+    if (!empty($results)) {
+        $count   = $results[0]->cnt_orders;
+        $json    = json_encode(['count' => $count]); 
+    }
+
+    // Return JSON
+    header("Content-Type: application/json");
+    header("Content-Length: " . strlen($json));
+    echo $json; 
+    exit;
 }
  
 // This bit is a special action hook that works with the WordPress AJAX functionality. 
