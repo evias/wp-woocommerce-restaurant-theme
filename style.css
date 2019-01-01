@@ -1,0 +1,123 @@
+/*
+Theme Name: Auberge Child
+Template: auberge
+*/
+
+/* #1: Disable homepage news section */
+.blog-posts.page-section {
+    display: none;
+}
+
+/* #2: List for Menu page */
+.woocommerce ul.products > li.product-category.product {
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+.woocommerce ul.products > li.product-category > a img {
+    width: 64px;
+    height: 64px;
+    display: inline;
+}
+
+.woocommerce ul.products > li.product-category > a h2 {
+    display: inline;
+}
+
+/* #3: List for Category page */
+.woocommerce #main article.page.entry {
+    width: 60%;
+    margin: 0;
+    display: inline-block;
+}
+
+.woocommerce ul.products > li.product.entry {
+    width: 100%;
+    margin-bottom: 0px;
+    position: relative;
+}
+
+.woocommerce ul.products > li.product.entry .onsale {
+    top: 0px;
+    left: 0px;
+    width: 54px;
+    opacity: 0.6;
+    font-size: 0.7em;
+}
+
+.woocommerce ul.products > li.product.entry > a img {
+    width: 64px;
+    height: 64px;
+    display: inline;
+    margin: 10px;
+}
+
+.woocommerce ul.products > li.product.entry > a {
+    display: inline;
+}
+
+.woocommerce ul.products > li.product.entry > a h2 {
+    display: inline;
+    font-size: 0.9em;
+    position: absolute;
+    top: 5px;
+}
+
+.woocommerce ul.products > li.product.entry > a span.price {
+    position: absolute;
+    left: 85px;
+    top: 50px;
+}
+
+.woocommerce ul.products > li.product.entry > a span.price ins {
+    box-shadow: none;
+    color: #0aac8e;
+}
+
+.woocommerce ul.products > li.product.entry > a.button.ajax_add_to_cart,
+.woocommerce ul.products > li.product.entry > a.button.add_to_cart_button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+/* #4: Fix "count items in category" <mark> */
+mark.count { 
+    background: transparent;
+    color: #000;
+    box-shadow: none;
+}
+
+/* #5: Fix Mobile-Ready website */
+@media only screen and (max-width: 600px) {
+    .woocommerce #main article.page.entry {
+        width: 100%;
+        display: block;
+    }
+
+    .woocommerce ul.products > li.product.entry > a.button.ajax_add_to_cart,
+    .woocommerce ul.products > li.product.entry > a.button.add_to_cart_button {
+        width: 160px;
+        position: absolute;
+        right: 15px;
+        top: 20px;
+    }
+
+    .woocommerce ul.products > li.product.entry > a h2 {
+        display: inline;
+        font-size: 0.8em;
+        position: absolute;
+        top: 10px;
+        left: 84px;
+    }
+
+    .woocommerce ul.products > li.product .onsale {
+        top: 10px;
+        left: 40px;
+        width: 54px;
+        opacity: 0.6;
+        font-size: 0.7em;
+    }
+}
+/* End #5 */
+
