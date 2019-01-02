@@ -25,7 +25,7 @@ if ( ! is_ajax() ) {
 <script>
 var api_check_delivery = function() {
    jQuery.ajax({
-        url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
+        url: "<?php echo bloginfo('url')?>/wp-admin/admin-ajax.php?action=is_delivering", // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
         data: {
             'action': 'is_delivering'
         },
