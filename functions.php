@@ -96,7 +96,7 @@ function check_orders() {
     exit;
 }
 
-function is_delivering() {
+function is_delivering($request) {
  
     global $wpdb;
 
@@ -118,8 +118,19 @@ function is_delivering() {
     exit;
 }
 
+// Hook to theme in Admin
 add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_styles', PHP_INT_MAX);
 add_action('in_admin_footer', 'add_orders_ajax_call');
+
+// Register admin-ajax.php?action=XX calls
 add_action( 'wp_ajax_check_orders', 'check_orders' );
 add_action( 'wp_ajax_is_delivering', 'is_delivering' );
+
+// Register new REST API route for delivery status
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'v1/status', '/delivery', array(
+        'methods' => 'GET',
+        'callback' => 'is_delivering',
+    ) );
+} );
 ?>

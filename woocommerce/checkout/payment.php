@@ -18,17 +18,15 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! is_ajax() ) {
-	do_action( 'woocommerce_review_order_before_payment' );
+    do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
 
 <script>
 var api_check_delivery = function() {
    jQuery.ajax({
-        url: "<?php echo bloginfo('url')?>/wp-admin/admin-ajax.php?action=is_delivering", // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
-        data: {
-            'action': 'is_delivering'
-        },
+        url: "<?php echo bloginfo('url')?>/wp-json/v1/status/delivery",
+        data: {},
         success:function(data) {
             console.log("Data: ", data);
             let status = data.status;
