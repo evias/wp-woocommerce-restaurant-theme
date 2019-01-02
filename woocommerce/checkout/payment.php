@@ -25,7 +25,7 @@ if ( ! is_ajax() ) {
 <script>
 var api_check_delivery = function() {
    jQuery.ajax({
-        url: "<?php echo bloginfo('url')?>/wp-json/v1/status/delivery",
+        url: "<?php echo bloginfo('url')?>/wp-json/restaurant/v1/delivery",
         data: {},
         success:function(data) {
             console.log("Data: ", data);
