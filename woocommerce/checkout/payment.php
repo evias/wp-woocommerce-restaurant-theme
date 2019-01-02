@@ -22,6 +22,38 @@ if ( ! is_ajax() ) {
 }
 ?>
 
+<script>
+var api_check_delivery = function() {
+   jQuery.ajax({
+        url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
+        data: {
+            'action': 'is_delivering'
+        },
+        success:function(data) {
+            console.log("Data: ", data);
+            let status = data.status;
+
+            console.log("Status: ", status);
+
+            if (status === false) {
+                jQuery("button[name=woocommerce_checkout_place_order]").hide();
+            }
+        },
+        error: function(errorThrown){
+            console.log("Error: ", errorThrown);
+        }
+    });
+};
+
+jQuery(document).ready(function($) {
+ 
+ setInterval(api_check_delivery, 20000);
+
+ // open the dance..
+ api_check_delivery();
+});
+</script>
+
 <div id="payment" class="woocommerce-checkout-payment">
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<ul class="wc_payment_methods payment_methods methods">

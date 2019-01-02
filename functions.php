@@ -1,14 +1,31 @@
 <?php
+/**
+ * Copyright 2019 Grégory Saive (greg@evias.be - eVias Services)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+define("SCHEDULER_POST_ID", 735);
+
 
 // Action: add child theme styles and scripts
-add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_styles', PHP_INT_MAX);
 function enqueue_child_theme_styles() {
-  wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css' );
+    wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css' );
 }
-/*
+
 // This would normally be enqueued as a file, but for the sake of ease we will just print to the footer
 function add_orders_ajax_call(){ ?>
- 
+
 <script>
 // globalize the counter to each page load
 var current_count_orders = -1;
@@ -59,8 +76,6 @@ jQuery(document).ready(function($) {
 </script>
 <?php } 
 
-add_action('in_admin_footer', 'add_orders_ajax_call');
-
 function check_orders() {
  
     global $wpdb;
@@ -80,8 +95,31 @@ function check_orders() {
     echo $json; 
     exit;
 }
+
+function is_delivering() {
  
-// This bit is a special action hook that works with the WordPress AJAX functionality. 
+    global $wpdb;
+
+    // Read total number of orders
+    $results = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
+
+    $isOpened = false;
+    if (!empty($results)) {
+        $result  = $results[0]->meta_value;
+        $array   = unserialize($result);
+
+        var_dump($array);die;
+    }
+
+    // Return JSON
+    header("Content-Type: application/json");
+    header("Content-Length: " . strlen($json));
+    echo '{ "status": ' . ($isOpened ? "true" : "false") . ' }'; 
+    exit;
+}
+
+add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_styles', PHP_INT_MAX);
+add_action('in_admin_footer', 'add_orders_ajax_call');
 add_action( 'wp_ajax_check_orders', 'check_orders' );
-*/
+add_action( 'wp_ajax_is_delivering', 'is_delivering' );
 ?>

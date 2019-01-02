@@ -6,10 +6,6 @@ This repository holds a child theme implementation for Wordpress with an **overw
 
 Package licensed under [MIT](LICENSE) License.
 
-## Disclaimer
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 ## Author / Contributors
 
 | Name | Github |
@@ -23,8 +19,21 @@ If you like the initiative, and for the sake of good mood, I recommend you take 
     Bitcoin: bc1qslcp7mw3zzldwf9arnltzfnqpnqq0l6smhxyym
     NEM: NB72EM6TTSX72O47T3GQFL345AB5WYKIDODKPPYW
 
+
 ## License
 
-This software is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+You will find a copy of the [Apache v2.0](LICENSE) License in the root of this repository.
 
-You will find a copy of the [MIT license](LICENSE) in the root this repository.
+Copyright 2019 Grégory Saive (greg@evias.be - eVias Services)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

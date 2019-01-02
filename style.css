@@ -3,6 +3,18 @@ Theme Name: Auberge Child
 Template: auberge
 */
 
+/**
+ * Contains the following overwrites:
+ *
+ * #1: Disable homepage news section
+ * #2: List for Menu page
+ * #3: List for Category page
+ * #4: Fix "count items in category" <mark>
+ * #5: Fix Mobile-Ready website
+ *
+ * @author eVias Services (https://evias.be)
+ **/
+
 /* #1: Disable homepage news section */
 .blog-posts.page-section {
     display: none;
