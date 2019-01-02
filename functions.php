@@ -14,7 +14,7 @@ function add_orders_ajax_call(){ ?>
 var current_count_orders = -1;
 
 var api_check_orders = function() {
-   $.ajax({
+   jQuery.ajax({
         url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
         data: {
             'action': 'check_orders'
@@ -63,7 +63,7 @@ add_action('in_admin_footer', 'add_orders_ajax_call');
 
 function check_orders() {
  
-	global $wpdb;
+    global $wpdb;
 
     // Read total number of orders
     $results = $wpdb->get_results( "SELECT count(*) as cnt_orders FROM {$wpdb->prefix}posts WHERE post_type = 'shop_order'", OBJECT );
