@@ -101,14 +101,40 @@ function is_delivering($request) {
     global $wpdb;
 
     // Read total number of orders
-    $results = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
-
+    $results = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
     $isOpened = false;
-    if (!empty($results)) {
-        $result  = $results[0]->meta_value;
-        $array   = unserialize($result);
 
-        var_dump($array);die;
+    $schedule = null;
+    for ($i = 0, $m = count($results); $i < $m; $i++) {
+        if ($results[$i]->meta_key !== "woc_hours_meta") {
+            continue;
+        }
+
+        $schedule = unserialize($results[$i]->meta_value);
+        break;
+    }
+
+    if (! empty($schedule)) {
+        $message = $schedule["woc_message"];
+        $daysId = [
+            "Mon" => 10003,
+            "Tue" => 10004,
+            "Wed" => 10005,
+            "Thu" => 10006,
+            "Fri" => 10007,
+            "Sat" => 10001,
+            "Sun" => 10002,
+        ];
+
+        $currentDate = new \DateTime("now", new \DateTimeZone("CET")); 
+        $currentDay  = $currentDate->format("D");
+        $scheduleToday = isset($schedule[$daysId[$currentDay]]) ? $schedule[$daysId[$currentDay]] : false;
+
+        if (false === $scheduleToday) {
+            $isOpened = false;
+        }
+
+        //XXX also read daily schedule and TIME
     }
 
     // Return JSON
@@ -128,7 +154,7 @@ add_action( 'wp_ajax_is_delivering', 'is_delivering' );
 
 // Register new REST API route for delivery status
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'v1/status', '/delivery', array(
+    register_rest_route( 'restaurant/v1', '/delivery', array(
         'methods' => 'GET',
         'callback' => 'is_delivering',
     ) );
