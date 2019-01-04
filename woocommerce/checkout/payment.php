@@ -27,14 +27,17 @@ var api_check_delivery = function() {
    jQuery.ajax({
         url: "<?php echo bloginfo('url')?>/wp-json/restaurant/v1/delivery",
         data: {},
-        success:function(data) {
-            console.log("Data: ", data);
+        success:function(response) {
+            console.log("Response: ", response);
+            let data   = response.data;
             let status = data.status;
 
             console.log("Status: ", status);
 
             if (status === false) {
                 jQuery("button[name=woocommerce_checkout_place_order]").hide();
+
+                //XXX show alert
             }
         },
         error: function(errorThrown){

@@ -15,148 +15,32 @@
  * limitations under the License.
  */
 
+/**
+ * Constants used across the child theme
+ * 
+ * @since 1.0.0
+ */
 define("SCHEDULER_POST_ID", 735);
 
+// Include child theme source
+require_once dirname( __FILE__ ) . '/includes/class-evs-api-response.php';
+require_once dirname( __FILE__ ) . '/includes/class-evs-order-listener.php';
+require_once dirname( __FILE__ ) . '/includes/class-evs-js-injector.php';
+require_once dirname( __FILE__ ) . '/includes/class-evs-css-injector.php';
 
-// Action: add child theme styles and scripts
-function enqueue_child_theme_styles() {
-    wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css' );
-}
-
-// This would normally be enqueued as a file, but for the sake of ease we will just print to the footer
-function add_orders_ajax_call(){ ?>
-
-<script>
-// globalize the counter to each page load
-var current_count_orders = -1;
-
-var api_check_orders = function() {
-   jQuery.ajax({
-        url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
-        data: {
-            'action': 'check_orders'
-        },
-        success:function(data) {
-            if (typeof data == 'string') {
-                try {
-                    data = JSON.parse(data);
-                }
-                catch(e) { console.log("Error in JSON: ", e); return false; }
-            }
-
-            let cnt = parseInt(data.count);
-
-            console.log("Count: ", cnt);
-
-            if (current_count_orders < 0) {
-                current_count_orders = cnt;
-                return false; // fresh reload
-            }
-
-            if (cnt > current_count_orders) {
-                console.log("Time to bell!!! RIIINNGG");
-                //XXX ring <audio>
-
-                current_count_orders = cnt;
-            }
-        },  
-        error: function(errorThrown){
-            console.log("Error: ", errorThrown);
-        }
-    });
-};
-
-jQuery(document).ready(function($) {
- 
-    setInterval(api_check_orders, 20000);
-
-    // open the dance..
-    api_check_orders();
-});
-</script>
-<?php } 
-
-function check_orders() {
- 
-    global $wpdb;
-
-    // Read total number of orders
-    $results = $wpdb->get_results( "SELECT count(*) as cnt_orders FROM {$wpdb->prefix}posts WHERE post_type = 'shop_order'", OBJECT );
-
-    $json = "{}";
-    if (!empty($results)) {
-        $count   = $results[0]->cnt_orders;
-        $json    = json_encode(['count' => $count]); 
-    }
-
-    // Return JSON
-    header("Content-Type: application/json");
-    header("Content-Length: " . strlen($json));
-    echo $json; 
-    exit;
-}
-
-function is_delivering($request) {
- 
-    global $wpdb;
-
-    // Read total number of orders
-    $results = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
-    $isOpened = false;
-
-    $schedule = null;
-    for ($i = 0, $m = count($results); $i < $m; $i++) {
-        if ($results[$i]->meta_key !== "woc_hours_meta") {
-            continue;
-        }
-
-        $schedule = unserialize($results[$i]->meta_value);
-        break;
-    }
-
-    if (! empty($schedule)) {
-        $message = $schedule["woc_message"];
-        $daysId = [
-            "Mon" => 10003,
-            "Tue" => 10004,
-            "Wed" => 10005,
-            "Thu" => 10006,
-            "Fri" => 10007,
-            "Sat" => 10001,
-            "Sun" => 10002,
-        ];
-
-        $currentDate = new \DateTime("now", new \DateTimeZone("CET")); 
-        $currentDay  = $currentDate->format("D");
-        $scheduleToday = isset($schedule[$daysId[$currentDay]]) ? $schedule[$daysId[$currentDay]] : false;
-
-        if (false === $scheduleToday) {
-            $isOpened = false;
-        }
-
-        //XXX also read daily schedule and TIME
-    }
-
-    // Return JSON
-    header("Content-Type: application/json");
-    header("Content-Length: " . strlen($json));
-    echo '{ "status": ' . ($isOpened ? "true" : "false") . ' }'; 
-    exit;
-}
-
-// Hook to theme in Admin
-add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_styles', PHP_INT_MAX);
-add_action('in_admin_footer', 'add_orders_ajax_call');
+// Inject CSS and JS into Backend Theme
+add_action('wp_enqueue_scripts', 'EVS_CSS_Injector::setStylesheet', PHP_INT_MAX);
+add_action('in_admin_footer', 'EVS_JS_Injector::getOrderListener');
 
 // Register admin-ajax.php?action=XX calls
-add_action( 'wp_ajax_check_orders', 'check_orders' );
-add_action( 'wp_ajax_is_delivering', 'is_delivering' );
+add_action('wp_ajax_check_orders', 'EVS_Order_Listener::getCountOrders' );
+add_action('wp_ajax_is_delivering', 'EVS_Status_Listener::isDelivering' );
 
 // Register new REST API route for delivery status
-add_action( 'rest_api_init', function () {
-    register_rest_route( 'restaurant/v1', '/delivery', array(
+add_action('rest_api_init', function () {
+    register_rest_route('restaurant/v1', '/delivery', array(
         'methods' => 'GET',
         'callback' => 'is_delivering',
-    ) );
-} );
+    ));
+});
 ?>
