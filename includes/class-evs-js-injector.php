@@ -77,7 +77,7 @@ var api_check_orders = function() {
             if (cnt > current_count_orders) {
                 console.log("Time to bell!!! RIIINNGG");
 
-                jQuery("#order-alarm").trigger("play");
+                document.getElementById("order-alarm").play();
                 current_count_orders = cnt;
             }
         },
