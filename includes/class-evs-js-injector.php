@@ -32,6 +32,13 @@ class EVS_JS_Injector {
      */
     static public function injectOrderListener()
     {
+        echo <<<EOA
+<audio id="order-alarm">
+    <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
+    Your browser does not support the audio element.
+</audio>
+EOA;
+
         echo <<<EOH
 <script>
 // globalize the counter to each page load
@@ -73,26 +80,21 @@ var api_check_orders = function() {
                 jQuery("#order-alarm").trigger("play");
                 current_count_orders = cnt;
             }
-        },  
+        },
         error: function(errorThrown){
             console.log("Error: ", errorThrown);
         }
     });
 };
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function(e) {
  
-    setInterval(api_check_orders, 20000);
+    setInterval(function() { api_check_orders() }, 20000);
 
     // open the dance..
     api_check_orders();
 });
 </script>
-
-<audio id="order-alarm">
-    <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
-    Your browser does not support the audio element.
-</audio>
 EOH;
     }
 
