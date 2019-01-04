@@ -34,7 +34,7 @@ class EVS_JS_Injector {
     {
         echo <<<EOA
 <button style="display: none;" id="interact-button">&nbsp;</button>
-<audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="">
+<audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="" muted="muted">
     <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
     Your browser does not support the audio element.
 </audio>
