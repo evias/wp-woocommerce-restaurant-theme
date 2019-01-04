@@ -69,7 +69,11 @@ var api_check_orders = function() {
 
             if (cnt > current_count_orders) {
                 console.log("Time to bell!!! RIIINNGG");
-                //XXX ring <audio>
+
+                jQuery("#order-alarm").trigger("play");
+                setTimeout(function() { 
+                    jQuery("#order-alarm").trigger("pause");
+                }, 5000);
 
                 current_count_orders = cnt;
             }
@@ -88,6 +92,11 @@ jQuery(document).ready(function($) {
     api_check_orders();
 });
 </script>
+
+<audio id="order-alarm">
+    <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
+    Your browser does not support the audio element.
+</audio>
 EOH;
     }
 
