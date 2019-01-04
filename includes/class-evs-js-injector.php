@@ -30,9 +30,9 @@ class EVS_JS_Injector {
      * @brief   Get the orders listener JS script
      * @detail  Get the HTML for injecting the orders listener JS script
      */
-    static public function getOrderListener()
+    static public function injectOrderListener()
     {
-        $html = <<<EOH
+        echo <<<EOH
 <script>
 // globalize the counter to each page load
 var current_count_orders = -1;
@@ -89,8 +89,6 @@ jQuery(document).ready(function($) {
 });
 </script>
 EOH;
-
-        return $html;
     }
 
 }

@@ -30,7 +30,7 @@ require_once dirname( __FILE__ ) . '/includes/class-evs-css-injector.php';
 
 // Inject CSS and JS into Backend Theme
 add_action('wp_enqueue_scripts', 'EVS_CSS_Injector::setStylesheet', PHP_INT_MAX);
-add_action('in_admin_footer', 'EVS_JS_Injector::getOrderListener');
+add_action('in_admin_footer', 'EVS_JS_Injector::injectOrderListener');
 
 // Register admin-ajax.php?action=XX calls
 add_action('wp_ajax_check_orders', 'EVS_Order_Listener::getCountOrders' );
