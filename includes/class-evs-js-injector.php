@@ -33,8 +33,7 @@ class EVS_JS_Injector {
     static public function injectOrderListener()
     {
         echo <<<EOA
-<button style="display: none;" id="interact-button">&nbsp;</button>
-<audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="" muted="muted">
+<audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="" muted>
     <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
     Your browser does not support the audio element.
 </audio>
@@ -92,8 +91,12 @@ var play_sound = function() {
 //    var btn = document.getElementById('interact-button');
 //    btn.click();
 
+    let a = new Audio("/wp-content/uploads/2019/01/new.wav");
+    a.play();
+/*
     // now play sound
     setTimeout(function() { document.getElementById("order-alarm").play(); }, 500);
+*/
 };
 
 jQuery(document).ready(function(e) {
