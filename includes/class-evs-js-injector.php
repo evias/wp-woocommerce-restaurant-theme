@@ -71,15 +71,6 @@ var api_check_orders = function() {
                 console.log("Time to bell!!! RIIINNGG");
 
                 jQuery("#order-alarm").trigger("play");
-                let callback = setInterval(function() {
-                    jQuery("#order-alarm").trigger("play");
-                }, 4500);
-
-                setTimeout(function() { 
-                    jQuery("#order-alarm").trigger("pause");
-                    clearInterval(callback);
-                }, 20000);
-
                 current_count_orders = cnt;
             }
         },  
