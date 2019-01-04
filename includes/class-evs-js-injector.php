@@ -33,6 +33,7 @@ class EVS_JS_Injector {
     static public function injectOrderListener()
     {
         echo <<<EOA
+<button style="display: none;" id="interact-button">&nbsp;</button>
 <audio id="order-alarm">
     <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
     Your browser does not support the audio element.
@@ -76,8 +77,7 @@ var api_check_orders = function() {
 
             if (cnt > current_count_orders) {
                 console.log("Time to bell!!! RIIINNGG");
-
-                document.getElementById("order-alarm").play();
+                play_sound();
                 current_count_orders = cnt;
             }
         },
@@ -85,6 +85,15 @@ var api_check_orders = function() {
             console.log("Error: ", errorThrown);
         }
     });
+};
+
+var play_sound = function() {
+    // fake-interact with website first
+    var btn = document.getElementById('interact-button');
+    btn.click();
+
+    // now play sound
+    setTimeout(function() { document.getElementById("order-alarm").play(); }, 500);
 };
 
 jQuery(document).ready(function(e) {
