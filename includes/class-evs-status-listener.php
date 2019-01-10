@@ -32,10 +32,9 @@ class EVS_Status_Listener {
      */
     static public function isDelivering($request) 
     {
-
         global $wpdb;
 
-        // Read total number of orders
+        // Read scheduler configuration
         $results = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
         $status = false;
 
@@ -49,32 +48,47 @@ class EVS_Status_Listener {
             break;
         }
 
-        if (! empty($schedule)) {
-            $message = $schedule["woc_message"];
-            $daysId = [
-                "Mon" => 10003,
-                "Tue" => 10004,
-                "Wed" => 10005,
-                "Thu" => 10006,
-                "Fri" => 10007,
-                "Sat" => 10001,
-                "Sun" => 10002,
-            ];
-
-            $currentDate = new \DateTime("now", new \DateTimeZone("CET")); 
-            $currentDay  = $currentDate->format("D");
-            $scheduleToday = isset($schedule[$daysId[$currentDay]]) ? $schedule[$daysId[$currentDay]] : false;
-
-            if (false === $scheduleToday) {
-                $status = false;
-            }
-
-            //XXX also read daily schedule and TIME
+        if (empty($schedule)) {
+            return EVS_API_Response::sendResponse(['status' => true, "message" => "ok"]);
         }
 
-        //XXX
-        $status = true;
-        return EVS_API_Response::sendResponse(['status' => $status]);
+        // prepare WooCommerce Open/Close Scheduler data
+        $message = $schedule["woc_message"];
+        $daysId = [
+            "Mon" => 10003,
+            "Tue" => 10004,
+            "Wed" => 10005,
+            "Thu" => 10006,
+            "Fri" => 10007,
+            "Sat" => 10001,
+            "Sun" => 10002,
+        ];
+
+        // fetch current date
+        $currentDate = new \DateTime("now", new \DateTimeZone("CET")); 
+        $currentDay  = $currentDate->format("D");
+        $currentHour = $currentDate->format("h");
+        $currentMins = $currentDate->format("i");
+
+        // read today's schedule
+        $scheduleToday = isset($schedule[$daysId[$currentDay]]) ? array_shift($schedule[$daysId[$currentDay]]) : false;
+
+        if (false === $scheduleToday) {
+            return EVS_API_Response::sendResponse(['status' => false, "message" => $message]);
+        }
+
+        list($start,) = split(" ", $scheduleToday["open"]);
+        list($end,)   = split(" ", $scheduleToday["end"]);
+        $startHour    = split(":", $start);
+        $endHour      = split(":", $end);
+
+        $status = false;
+        if ($currentHour >= $startHour && $currentHour < $endHour) {
+            $status = true;
+        }
+
+        $message = $status ? "ok" : $message;
+        return EVS_API_Response::sendResponse(['status' => $status, "message" => $message]);
     }
 
 }
