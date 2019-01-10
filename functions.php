@@ -25,6 +25,7 @@ define("SCHEDULER_POST_ID", 735);
 // Include child theme source
 require_once dirname( __FILE__ ) . '/includes/class-evs-api-response.php';
 require_once dirname( __FILE__ ) . '/includes/class-evs-order-listener.php';
+require_once dirname( __FILE__ ) . '/includes/class-evs-status-listener.php';
 require_once dirname( __FILE__ ) . '/includes/class-evs-js-injector.php';
 require_once dirname( __FILE__ ) . '/includes/class-evs-css-injector.php';
 
@@ -34,7 +35,7 @@ add_action('in_admin_footer', 'EVS_JS_Injector::getOrderListener');
 
 // Register admin-ajax.php?action=XX calls
 add_action('wp_ajax_check_orders', 'EVS_Order_Listener::getCountOrders' );
-add_action('wp_ajax_is_delivering', 'EVS_Status_Listener::isDelivering' );
+//add_action('wp_ajax_is_delivering', 'EVS_Status_Listener::isDelivering' );
 
 // Register new REST API route for delivery status
 add_action('rest_api_init', function () {
