@@ -77,10 +77,10 @@ class EVS_Status_Listener {
             return EVS_API_Response::sendResponse(['status' => false, "message" => $message]);
         }
 
-        list($start,) = split(" ", $scheduleToday["open"]);
-        list($end,)   = split(" ", $scheduleToday["close"]);
-        list($startHour, $startMins)  = split(":", $start);
-        list($endHour, $endMins)      = split(":", $end);
+        list($start,) = explode(" ", $scheduleToday["open"]);
+        list($end,)   = explode(" ", $scheduleToday["close"]);
+        list($startHour, $startMins)  = explode(":", $start);
+        list($endHour, $endMins)      = explode(":", $end);
 
         $status = false;
         if (

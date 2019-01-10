@@ -48,7 +48,7 @@ var api_check_delivery = function() {
 
 jQuery(document).ready(function($) {
  
- setInterval(api_check_delivery, 20000);
+ setInterval(api_check_delivery, 120000);
 
  // open the dance..
  api_check_delivery();
