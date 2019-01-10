@@ -88,16 +88,6 @@ class EVS_Status_Listener {
         $endHour   = (int) $endHour;
         $endMins   = (int) $endMins;
 
-        print_r([
-            "startHour" => $startHour,
-            "endHour"   => $endHour,
-            "startMins" => $startMins,
-            "endMins"   => $endMins,
-            "currentHour" => $currentHour,
-            "currentMins" => $currentMins
-        ]);
-        die;
-
         $status = false;
         if (
             ($currentHour > $startHour || ($currentHour === $startHour && $currentMins >= $startMins))
