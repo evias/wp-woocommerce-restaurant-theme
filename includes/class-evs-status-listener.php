@@ -82,6 +82,12 @@ class EVS_Status_Listener {
         list($startHour, $startMins)  = explode(":", $start);
         list($endHour, $endMins)      = explode(":", $end);
 
+        // cast to int ..
+        $startHour = (int) $startHour;
+        $startMins = (int) $startMins;
+        $endHour   = (int) $endHour;
+        $endMins   = (int) $endMins;
+
         print_r([
             "startHour" => $startHour,
             "endHour"   => $endHour,
