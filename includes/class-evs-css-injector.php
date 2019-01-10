@@ -30,7 +30,7 @@ class EVS_CSS_Injector {
      * @brief   Inject the child theme CSS
      * @detail  Inject the child theme CSS
      */
-    static public function setStylesheet()
+    public function setStylesheet()
     {
         wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css' );
     }

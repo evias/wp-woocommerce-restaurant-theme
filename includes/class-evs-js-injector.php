@@ -30,7 +30,7 @@ class EVS_JS_Injector {
      * @brief   Get the orders listener JS script
      * @detail  Get the HTML for injecting the orders listener JS script
      */
-    static public function injectOrderListener()
+    public function injectOrderListener()
     {
         echo <<<EOA
 <audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="" muted>
@@ -87,16 +87,8 @@ var api_check_orders = function() {
 };
 
 var play_sound = function() {
-    // fake-interact with website first
-//    var btn = document.getElementById('interact-button');
-//    btn.click();
-
     let a = new Audio("/wp-content/uploads/2019/01/new.wav");
     a.play();
-/*
-    // now play sound
-    setTimeout(function() { document.getElementById("order-alarm").play(); }, 500);
-*/
 };
 
 jQuery(document).ready(function(e) {

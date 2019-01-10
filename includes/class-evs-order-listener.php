@@ -30,7 +30,7 @@ class EVS_Order_Listener {
      * @brief   Get the orders count
      * @detail  Get the total orders count
      */
-    static public function getCountOrders() 
+    public function getCountOrders() 
     {
         global $wpdb;
 
