@@ -31,13 +31,11 @@ var api_check_delivery = function() {
             console.log("Response: ", response);
             let data   = response.data;
             let status = data.status;
-
-            console.log("Status: ", status);
+            let message = data.message;
 
             if (status === false) {
                 jQuery("button[name=woocommerce_checkout_place_order]").hide();
-
-                //XXX show alert
+                jQuery("#delivery-status-msg").html(message).removeClass("hide");
             }
         },
         error: function(errorThrown){
@@ -79,7 +77,8 @@ jQuery(document).ready(function($) {
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
-		<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
+        <?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
+        <?php echo '<div id="delivery-status-msg" class="hide alert-danger">&nbsp;</div>'; ?>
 
 		<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
 
