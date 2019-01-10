@@ -41,7 +41,7 @@ add_action('wp_ajax_check_orders', 'EVS_Order_Listener::getCountOrders' );
 add_action('rest_api_init', function () {
     register_rest_route('restaurant/v1', '/delivery', array(
         'methods' => 'GET',
-        'callback' => 'EVS_Status_Listener::isDelivering',
+        'callback' => [new EVS_Status_Listener, "isDelivering"],
     ));
 });
 ?>

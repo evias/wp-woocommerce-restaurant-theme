@@ -30,7 +30,7 @@ class EVS_Status_Listener {
      * @brief   Get status of delivery
      * @detail  Get true or false when delivery is respectively active or inactive
      */
-    static public function isDelivering($request) 
+    public function isDelivering($request) 
     {
         global $wpdb;
 
