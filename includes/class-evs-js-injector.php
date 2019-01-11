@@ -32,72 +32,18 @@ class EVS_JS_Injector {
      */
     public function injectOrderListener()
     {
+        // <iframe src="/wp-content/uploads/2019/01/new.wav" allow="autoplay" style="display:none" id="order-alarm-iframe"></iframe> 
         echo <<<EOA
-<audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="" muted>
+<audio id="order-alarm" webkit-playsinline="true" playsinline="true" autoplay="" loop muted controls>
     <source src="/wp-content/uploads/2019/01/new.wav" type="audio/wav">
     Your browser does not support the audio element.
 </audio>
 EOA;
 
+        $javascriptSourceCode = file_get_contents(dirname(__FILE__) . "/../assets/evs-order-inspector.js");
         echo <<<EOH
 <script>
-// globalize the counter to each page load
-var current_count_orders = -1;
-
-var api_check_orders = function() {
-   jQuery.ajax({
-        url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
-        data: {
-            "action": "check_orders"
-        },
-        success:function(response) {
-            let data = response;
-            if (typeof response == "string") {
-                try {
-                    response = JSON.parse(data);
-                    data = response.data;
-                }
-                catch(e) { console.log("Error in JSON: ", e); return false; }
-            } else {
-                data = response.data || null;
-            }
-
-            if (! data) {
-                current_count_orders = 0;
-                return false;
-            }
-
-            let cnt = parseInt(data.count);
-
-            if (current_count_orders < 0) {
-                current_count_orders = cnt;
-                return false; // fresh reload
-            }
-
-            if (cnt > current_count_orders) {
-                console.log("Time to bell!!! RIIINNGG");
-                play_sound();
-                current_count_orders = cnt;
-            }
-        },
-        error: function(errorThrown){
-            console.log("Error: ", errorThrown);
-        }
-    });
-};
-
-var play_sound = function() {
-    let a = new Audio("/wp-content/uploads/2019/01/new.wav");
-    a.play();
-};
-
-jQuery(document).ready(function(e) {
- 
-    setInterval(function() { api_check_orders() }, 20000);
-
-    // open the dance..
-    api_check_orders();
-});
+{$javascriptSourceCode}
 </script>
 EOH;
     }
