@@ -37,7 +37,6 @@ class EVS_Status_Listener {
         // Read scheduler configuration
         $results = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
         $status = false;
-
         $schedule = null;
         for ($i = 0, $m = count($results); $i < $m; $i++) {
             if ($results[$i]->meta_key !== "woc_hours_meta") {
