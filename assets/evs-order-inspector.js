@@ -72,7 +72,7 @@ var init_buttons = function() {
     });
 
     jQuery("#alarm-deactivate").click(function(e) {
-        e.preventDefaults();
+        e.preventDefault();
         stop_sound();
         return false;
     });
