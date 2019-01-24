@@ -60,18 +60,44 @@ var api_check_orders = function() {
     });
 };
 
+var init_buttons = function() {
+    jQuery("#alarm-activate").click(function(e) {
+        // This button is to fake interaction!!
+        //
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // DO NOT REMOVE THIS EVENT HANDLER.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //
+        return false;
+    });
+
+    jQuery("#alarm-deactivate").click(function(e) {
+        e.preventDefaults();
+        stop_sound();
+        return false;
+    });
+};
+
+var stop_sound = function() {
+    var aud = document.getElementById("order-alarm");
+    aud.pause();
+};
+
 var play_sound = function() {
     var aud = document.getElementById("order-alarm");
     aud.play();
 
     setTimeout(function() {
-        aud.pause();
-    }, 20000);
+        stop_sound();
+    }, 120000);
 };
 
 jQuery(document).ready(function(e) {
  
     setInterval(function() { api_check_orders() }, 20000);
+
+    // add event listeners
+    init_buttons();
 
     // open the dance..
     api_check_orders();
