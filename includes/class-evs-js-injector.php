@@ -42,6 +42,9 @@ class EVS_JS_Injector {
     <span> - </span>
     <button id="alarm-deactivate">Alarm Pause</button>
 </div>
+<br />
+<hr />
+<br />
 
 <audio id="order-alarm" webkit-playsinline="true" playsinline="true" loop>
     <source src="https://beta.da-antonio.be/wp-content/uploads/2019/01/new.wav" type="audio/wav">
