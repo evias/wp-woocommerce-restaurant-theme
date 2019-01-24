@@ -35,6 +35,7 @@ add_action('in_admin_footer', [new EVS_JS_Injector, "injectOrderListener"]);
 
 // BACKEND API for orders (wp_ajax.php?action=check_orders)
 add_action('wp_ajax_check_orders', [new EVS_Order_Listener, "getCountOrders"]);
+//XXX add_action('wp_ajax_fetch_orders', [new EVS_Order_Listener, "getProcessingOrders"]);
 
 // Register new REST API route for delivery status
 add_action('rest_api_init', function () {

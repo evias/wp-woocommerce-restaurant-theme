@@ -49,5 +49,29 @@ class EVS_Order_Listener {
 
         return EVS_API_Response::sendResponse(['count' => $count]);
     }
-    
+
+    /**
+     * @brief   Get processing orders list
+     * @detail  Get orders that need processing
+     */
+    public function getProcessingOrders()
+    {
+        global $wpdb;
+
+        // Read total number of orders
+        $results = $wpdb->get_results("
+            SELECT *
+            FROM {$wpdb->prefix}posts 
+            WHERE 
+                post_type = 'shop_order'
+                AND post_status = 'wc-processing'
+        ", OBJECT );
+
+        $items = [];
+        if (!empty($results)) {
+            $items = $results;
+        }
+
+        return EVS_API_Response::sendResponse(['items' => $items]);
+    }
 }

@@ -18,6 +18,21 @@
 // globalize the counter to each page load
 var current_count_orders = -1;
 
+var get_response_data = function(response) {
+    let data = response;
+    if (typeof response == "string") {
+        try {
+            response = JSON.parse(data);
+            data = response.data;
+        }
+        catch(e) { console.log("Error in JSON: ", e); return false; }
+    } else {
+        data = response.data || null;
+    }
+
+    return data;
+};
+
 var api_check_orders = function() {
    jQuery.ajax({
         url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
@@ -25,16 +40,7 @@ var api_check_orders = function() {
             "action": "check_orders"
         },
         success:function(response) {
-            let data = response;
-            if (typeof response == "string") {
-                try {
-                    response = JSON.parse(data);
-                    data = response.data;
-                }
-                catch(e) { console.log("Error in JSON: ", e); return false; }
-            } else {
-                data = response.data || null;
-            }
+            let data = get_response_data(response);
 
             if (! data) {
                 current_count_orders = 0;
@@ -88,13 +94,19 @@ var stop_sound = function() {
     aud.pause();
 };
 
+var reload_page = function() {
+    window.location.reload();
+    return false;
+};
+
 var play_sound = function() {
     var aud = document.getElementById("order-alarm");
     aud.play();
 
     setTimeout(function() {
         stop_sound();
-    }, 120000);
+        reload_page();
+    }, 90000);
 };
 
 jQuery(document).ready(function(e) {
@@ -106,4 +118,8 @@ jQuery(document).ready(function(e) {
 
     // open the dance..
     api_check_orders();
+
+    setTimeout(function() {
+        jQuery("#alarm-activate").click();
+    }, 2000);
 });
