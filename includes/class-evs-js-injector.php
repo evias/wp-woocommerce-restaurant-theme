@@ -34,7 +34,8 @@ class EVS_JS_Injector {
     {
         // <iframe src="/wp-content/uploads/2019/01/new.wav" allow="autoplay" style="display:none" id="order-alarm-iframe"></iframe> 
         echo <<<EOA
-<audio id="order-alarm" webkit-playsinline="true" playsinline="true" loop controls>
+<button id="fake-interaction">Alarm aktivieren</button>
+<audio id="order-alarm" webkit-playsinline="true" playsinline="true" loop>
     <source src="https://beta.da-antonio.be/wp-content/uploads/2019/01/new.wav" type="audio/wav">
     Your browser does not support the audio element.
 </audio>

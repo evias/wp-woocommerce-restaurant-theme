@@ -61,17 +61,12 @@ var api_check_orders = function() {
 };
 
 var play_sound = function() {
-    /*
-    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-    if (!isChrome) {
-        $('#order-alarm-iframe').remove()
-    }
-    else {
-        $('#order-alarm').remove()
-    }
-    */
     var aud = document.getElementById("order-alarm");
     aud.play();
+
+    setTimeout(function() {
+        aud.pause();
+    }, 20000);
 };
 
 jQuery(document).ready(function(e) {
