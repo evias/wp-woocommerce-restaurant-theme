@@ -76,6 +76,11 @@ var init_buttons = function() {
         stop_sound();
         return false;
     });
+
+    jQuery(".order-preview").click(function(e) {
+        stop_sound();
+        return true;
+    });
 };
 
 var stop_sound = function() {
