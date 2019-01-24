@@ -35,9 +35,13 @@ class EVS_JS_Injector {
         // <iframe src="/wp-content/uploads/2019/01/new.wav" allow="autoplay" style="display:none" id="order-alarm-iframe"></iframe> 
         echo <<<EOA
 <br />
-<button id="alarm-activate">Starten</button>
-<span> - </span>
-<button id="alarm-deactivate">Alarm Pause</button>
+<hr />
+<br />
+<div>
+    <button id="alarm-activate">Starten</button>
+    <span> - </span>
+    <button id="alarm-deactivate">Alarm Pause</button>
+</div>
 
 <audio id="order-alarm" webkit-playsinline="true" playsinline="true" loop>
     <source src="https://beta.da-antonio.be/wp-content/uploads/2019/01/new.wav" type="audio/wav">
