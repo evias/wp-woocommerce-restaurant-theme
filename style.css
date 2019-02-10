@@ -1,6 +1,26 @@
 /*
-Theme Name: Auberge Child
+Theme Name: Restaurant @ eVias
+Theme URI: https://evias.be/product/wordpress-theme-restaurant/
+Description: Child theme for Wordpress for restaurants with food delivery
+Author: Grégory Saive
+Author URI: https://evias.be
 Template: auberge
+Version: 1.0.0
+Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm, ring, bell, orders, javascript
+
+ * Copyright 2019 Grégory Saive (greg@evias.be - eVias Services)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
 */
 
 /**
