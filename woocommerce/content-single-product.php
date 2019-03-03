@@ -34,17 +34,19 @@ if ( post_password_required() ) {
 jQuery(document).ready(function($) {
 	var extra_1 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_1"]');
 	var extra_2 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"]');
+	var extra_2_sel = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"] select');
 	var extra_3 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_3"]');
+	var extra_3_sel = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_3"] select');
 
-	extra_2.attr("disabled", "disabled");
-	extra_3.attr("disabled", "disabled");
+	extra_2_sel.attr("disabled", "disabled");
+	extra_3_sel.attr("disabled", "disabled");
 
 	var extra_1_listener = function(e) {
 		var idx = $(this)[0].selectedIndex;
 
 		if (idx !== 0) {
 			extra_2.show();
-			extra_2.removeAttr("disabled");
+			extra_2_sel.removeAttr("disabled");
 			extra_2.on('change', extra_2_listener);
 		}
 
@@ -56,7 +58,7 @@ jQuery(document).ready(function($) {
 
 		if (idx !== 0) {
 			extra_3.show();
-			extra_3.removeAttr("disabled");
+			extra_3_sel.removeAttr("disabled");
 		}
 
 		return true;
