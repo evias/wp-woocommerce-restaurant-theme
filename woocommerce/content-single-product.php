@@ -71,15 +71,15 @@ jQuery(document).ready(function($) {
 	button.on('click', function(e) {
 		e.preventDefault();
 
-		if (extra1_sel[0].selectedIndex === 0) {
+		if (extra_1_sel[0].selectedIndex === 0) {
 			extra_1_sel.attr("disabled", "disabled");
 		}
 
-		if (extra2_sel[0].selectedIndex === 0) {
+		if (extra_2_sel[0].selectedIndex === 0) {
 			extra_2_sel.attr("disabled", "disabled");
 		}
 
-		if (extra3_sel[0].selectedIndex === 0) {
+		if (extra_3_sel[0].selectedIndex === 0) {
 			extra_3_sel.attr("disabled", "disabled");
 		}
 
