@@ -69,8 +69,6 @@ jQuery(document).ready(function($) {
 
 	extra_1.on('change', extra_1_listener);
 	form.on('submit', function(e) {
-		e.preventDefault();
-
 		if (extra_1_sel[0].selectedIndex === 0) {
 			extra_1_sel.attr("disabled", "disabled");
 		}
@@ -82,8 +80,6 @@ jQuery(document).ready(function($) {
 		if (extra_3_sel[0].selectedIndex === 0) {
 			extra_3_sel.attr("disabled", "disabled");
 		}
-
-		return true;
 	});
 });
 </script>
