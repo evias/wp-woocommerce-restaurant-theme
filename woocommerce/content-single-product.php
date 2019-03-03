@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 			extra_3_sel.attr("disabled", "disabled");
 		}
 
-		return true;
+		return form.submit();
 	});
 });
 </script>
