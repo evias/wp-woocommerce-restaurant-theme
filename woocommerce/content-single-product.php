@@ -32,7 +32,9 @@ if ( post_password_required() ) {
 
 <script>
 jQuery(document).ready(function($) {
+	var form = $('form.cart');
 	var extra_1 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_1"]');
+	var extra_1_sel = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_1"] select');
 	var extra_2 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"]');
 	var extra_2_sel = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"] select');
 	var extra_3 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_3"]');
@@ -65,6 +67,22 @@ jQuery(document).ready(function($) {
 	}
 
 	extra_1.on('change', extra_1_listener);
+	form.on('submit', function(e) {
+
+		if (extra1_sel[0].selectedIndex === 0) {
+			extra_1_sel.attr("disabled", "disabled");
+		}
+
+		if (extra2_sel[0].selectedIndex === 0) {
+			extra_2_sel.attr("disabled", "disabled");
+		}
+
+		if (extra3_sel[0].selectedIndex === 0) {
+			extra_3_sel.attr("disabled", "disabled");
+		}
+
+		return true;
+	});
 });
 </script>
 
