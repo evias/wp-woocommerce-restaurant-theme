@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
 			extra_2.on('change', extra_2_listener);
 		}
 
-		return false;
+		return true;
 	}
 
 	var extra_2_listener = function(e) {
@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
 			extra_3.show();
 		}
 
-		return false;
+		return true;
 	}
 
 	extra_1.on('change', extra_1_listener);
