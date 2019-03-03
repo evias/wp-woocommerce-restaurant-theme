@@ -5,7 +5,7 @@ Description: Child theme for Wordpress for restaurants with food delivery
 Author: Grégory Saive
 Author URI: https://evias.be
 Template: auberge
-Version: 2.5.4
+Version: 2.5.4.1
 Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm, ring, bell, orders, javascript
 */
 /**
@@ -34,6 +34,7 @@ Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm
  * #5: Fix Mobile-Ready website
  * #6: Fix duplicate Ingredients list
  * #7: WooCommerce / Wordpress Restaurant v1.0.0-alpha (usability, design fixes)
+ * #8: Extra and Product PPOM frontend Fix
  *
  * @author eVias Services (https://evias.be)
  **/
@@ -214,3 +215,12 @@ mark.count {
     display: none;
 }
 /* End #7 */
+
+/* #8: Extra and Product PPOM frontend Fix */
+
+/* extra_zutaten_(2|3) hidden until selection */
+div.ppom-field-wrapper[data-data_name="extra_zutaten_2"],
+div.ppom-field-wrapper[data-data_name="extra_zutaten_3"] {
+    display: none;
+}
+/* End #8 */
