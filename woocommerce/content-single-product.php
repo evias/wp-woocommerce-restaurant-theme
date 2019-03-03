@@ -36,15 +36,15 @@ jQuery(document).ready(function($) {
 	var extra_2 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"]');
 	var extra_3 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_3"]');
 
-	extra_2.prop("disabled", true);
-	extra_3.prop("disabled", true);
+	extra_2.attr("disabled", "disabled");
+	extra_3.attr("disabled", "disabled");
 
 	var extra_1_listener = function(e) {
 		var idx = $(this)[0].selectedIndex;
 
 		if (idx !== 0) {
 			extra_2.show();
-			extra_2.prop("disabled", false);
+			extra_2.removeAttr("disabled");
 			extra_2.on('change', extra_2_listener);
 		}
 
@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
 
 		if (idx !== 0) {
 			extra_3.show();
-			extra_3.prop("disabled", false);
+			extra_3.removeAttr("disabled");
 		}
 
 		return true;
