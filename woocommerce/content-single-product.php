@@ -33,6 +33,7 @@ if ( post_password_required() ) {
 <script>
 jQuery(document).ready(function($) {
 	var form = $('form.cart');
+	var button = $('button[name="add-to-cart"]');
 	var extra_1 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_1"]');
 	var extra_1_sel = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_1"] select');
 	var extra_2 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"]');
@@ -67,7 +68,8 @@ jQuery(document).ready(function($) {
 	}
 
 	extra_1.on('change', extra_1_listener);
-	form.on('submit', function(e) {
+	button.on('click', function(e) {
+		e.preventDefault();
 
 		if (extra1_sel[0].selectedIndex === 0) {
 			extra_1_sel.attr("disabled", "disabled");
