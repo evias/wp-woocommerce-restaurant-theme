@@ -31,6 +31,8 @@ Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm
  * #3: List for Category page
  * #4: Fix "count items in category" <mark>
  * #5: Fix Mobile-Ready website
+ * #6: Fix duplicate Ingredients list
+ * #7: WooCommerce / Wordpress Restaurant v1.0.0-alpha (usability, design fixes)
  *
  * @author eVias Services (https://evias.be)
  **/
@@ -39,6 +41,7 @@ Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm
 .blog-posts.page-section {
     display: none;
 }
+/* End #1 */
 
 /* #2: List for Menu page */
 .woocommerce ul.products > li.product-category.product {
@@ -55,6 +58,7 @@ Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm
 .woocommerce ul.products > li.product-category > a h2 {
     display: inline;
 }
+/* End #2 */
 
 /* #3: List for Category page */
 .woocommerce #main article.page.entry {
@@ -112,6 +116,7 @@ Tags: restaurant, food, delivery, interactive, order, notification, sound, alarm
     right: 10px;
     top: 10px;
 }
+/* End #3 */
 
 /* #4: Fix "count items in category" <mark> */
 mark.count { 
@@ -119,6 +124,7 @@ mark.count {
     color: #000;
     box-shadow: none;
 }
+/* End #4 */
 
 /* #5: Fix Mobile-Ready website */
 @media only screen and (max-width: 600px) {
@@ -153,3 +159,57 @@ mark.count {
 }
 /* End #5 */
 
+/* #6: Fix duplicate Ingredients list */
+.entry-content > .entry-summary {
+    display: none;
+} 
+/* End #6 */
+
+/* #7 WooCommerce / Wordpress Restaurant v1.0.0-alpha (usability, design fixes) */
+.woocommerce-result-count {
+    visibility: hidden;
+}
+
+.highlight {
+    opacity: 0.7;
+}
+
+.woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
+    background-color: #8e0000;
+}
+
+.byline.author.vcard.entry-meta-element {
+    visibility: hidden;
+}
+
+.posted_in {
+    visibility: hidden;
+}
+
+.woocommerce ul.products li.product .onsale {
+    background-color: #8e0000;
+}
+
+.nav-search-form .form-search {
+    background-color: transparent;
+}
+
+.woocommerce-store-notice, p.demo_store {
+    background-color: #1a1c1e;
+}
+
+.woocommerce-store-notice, p.demo_store {
+    padding: 1px 0;
+}
+
+.woocommerce-Price-amount.amount {
+    color: #77a464;
+}
+
+.entry-content > .entry-summary {
+    display: none;
+}
+/* End #7 */
