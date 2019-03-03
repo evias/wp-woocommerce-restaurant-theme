@@ -41,7 +41,7 @@ jQuery(document).ready(function($) {
 
 		if (idx !== 0) {
 			extra_2.show();
-			extra_2_listener();
+			extra_2.on('change', extra_2_listener);
 		}
 
 		return false;
