@@ -68,7 +68,7 @@ jQuery(document).ready(function($) {
 	}
 
 	extra_1.on('change', extra_1_listener);
-	button.on('click', function(e) {
+	form.on('submit', function(e) {
 		e.preventDefault();
 
 		if (extra_1_sel[0].selectedIndex === 0) {
@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 			extra_3_sel.attr("disabled", "disabled");
 		}
 
-		return form.submit();
+		return true;
 	});
 });
 </script>
