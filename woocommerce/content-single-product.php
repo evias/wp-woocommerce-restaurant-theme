@@ -31,31 +31,31 @@ if ( post_password_required() ) {
 ?>
 
 <script>
-var extra_1_listener = function(e) {
-	var idx = $(this)[0].selectedIndex;
-
-	if (idx !== 0) {
-		extra_2.show();
-		extra_2_listener();
-	}
-
-	return false;
-}
-
-var extra_2_listener = function(e) {
-	var idx = $(this)[0].selectedIndex;
-
-	if (idx !== 0) {
-		extra_3.show();
-	}
-
-	return false;
-}
-
 jQuery(document).ready(function($) {
 	var extra_1 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_1"]');
 	var extra_2 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_2"]');
 	var extra_3 = $('div.ppom-field-wrapper[data-data_name="extra_zutaten_3"]');
+
+	var extra_1_listener = function(e) {
+		var idx = $(this)[0].selectedIndex;
+
+		if (idx !== 0) {
+			extra_2.show();
+			extra_2_listener();
+		}
+
+		return false;
+	}
+
+	var extra_2_listener = function(e) {
+		var idx = $(this)[0].selectedIndex;
+
+		if (idx !== 0) {
+			extra_3.show();
+		}
+
+		return false;
+	}
 
 	extra_1.on('change', extra_1_listener);
 });
