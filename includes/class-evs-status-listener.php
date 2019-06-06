@@ -66,7 +66,7 @@ class EVS_Status_Listener {
         // fetch current date
         $currentDate = new \DateTime("now", new \DateTimeZone("CET")); 
         $currentDay  = $currentDate->format("D"); // textual representation of a day, three letters
-        $currentHour = (int) $currentDate->format("g"); // 12-hour format without leading 0
+        $currentHour = (int) $currentDate->format("G"); // 24-hour format without leading 0
         $currentMins = (int) $currentDate->format("i");
 
         // read today's schedule
@@ -82,9 +82,9 @@ class EVS_Status_Listener {
         list($endHour, $endMins)      = explode(":", $end);
 
         // cast to int ..
-        $startHour = (int) $startHour;
+        $startHour = (int) $startHour + (strpos($scheduleToday["open"], "PM") !== false && ((int) $startHour) !== 12 ? 12 : 0);
         $startMins = (int) $startMins;
-        $endHour   = (int) $endHour;
+        $endHour   = (int) $endHour + (strpos($scheduleToday["close"], "PM") !== false && ((int) $endHour) !== 12 ? 12 : 0);
         $endMins   = (int) $endMins;
 
         $status = false;
