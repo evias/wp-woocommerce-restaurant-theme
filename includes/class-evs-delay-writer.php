@@ -130,4 +130,61 @@ class EVS_Delay_Writer {
 
         return (int) $delay;
     }
+
+    /**
+     * Adds 'Delivery Delay' column header to 'Orders' page immediately after 'Total' column.
+     *
+     * @note Wordpress Filter
+     * @param string[] $columns
+     * @return string[] $new_columns
+     */
+    public function addAdminColumnHeader($columns) {
+
+        $new_columns = array();
+
+        foreach ( $columns as $column_name => $column_info ) {
+
+            $new_columns[ $column_name ] = $column_info;
+
+            if ( 'order_total' === $column_name ) {
+                $new_columns['delivery_delay'] = 'Wartezeit';
+            }
+        }
+
+        return $new_columns;
+    }
+
+    /**
+     * Adds 'Delivery Delay' column *content* to 'Orders' page immediately after 'Total' column.
+     *
+     * @note Wordpress Action
+     * @param string[] $columns
+     * @return string[] $new_columns
+     */
+    public function addAdminColumnContent($column) {
+        global $post;
+        global $wpdb;
+
+        if ( 'delivery_delay' === $column ) {
+
+            $delay = (new EVS_Delay_Writer)->getCurrentDelay($post->ID);
+
+            echo <<<EOA
+<div data-post-id="{$post->ID}">
+    <input type="text" class="delivery-delay-input" value="{$delay}" data-post-id="{$post->ID}" />
+    <span> (Minuten) </span>
+    <button class="save-delay" data-post-id="{$post->ID}">Speichern</button>
+</div>
+EOA;
+        }
+    }
+
+    /**
+     * Adjusts the styles for the new delivery_delay column.
+     */
+    function addAdminColumnStyles() {
+
+        $css = '.column-delivery_delay { width: 20%; }';
+        wp_add_inline_style('woocommerce_admin_styles', $css);
+    }
 }
