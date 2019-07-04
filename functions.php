@@ -33,7 +33,7 @@ require_once dirname( __FILE__ ) . '/includes/class-evs-css-injector.php';
 // Inject CSS and JS into Backend Theme
 add_action('wp_enqueue_scripts', [new EVS_CSS_Injector, "setStylesheet"], PHP_INT_MAX);
 add_action('in_admin_footer', [new EVS_JS_Injector, "injectOrderListener"]);
-//add_action('in_admin_footer', [new EVS_JS_Injector, "injectDelayWriter"]);
+add_action('in_admin_footer', [new EVS_JS_Injector, "injectDelayWriter"]);
 
 // BACKEND API for orders (wp_ajax.php?action=check_orders)
 add_action('wp_ajax_check_orders', [new EVS_Order_Listener, "getCountOrders"]);

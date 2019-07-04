@@ -62,9 +62,10 @@ EOH;
     /**
      * @brief   Get the delay writer JS script
      * @detail  Get the HTML for injecting the delay writer JS script
-     /
+     */
     public function injectDelayWriter()
     {
+        /**
         $delay = (new EVS_Delay_Writer)->getCurrentDelay();
 
         echo <<<EOA
@@ -81,6 +82,7 @@ EOH;
     <button id="save-delay">Speichern</button>
 </div>
 EOA;
+        **/
 
         $javascriptSourceCodeDelay = file_get_contents(dirname(__FILE__) . "/../assets/evs-delay-injector.js");
         echo <<<EOH
@@ -89,5 +91,4 @@ EOA;
 </script>
 EOH;
     }
-    */
 }
