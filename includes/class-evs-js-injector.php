@@ -72,7 +72,7 @@ EOH;
 #delay-wrapper {
     position: absolute;
     bottom: 30px;
-    left: 150px;
+    left: 280px;
 }
 </style>
 <div id="delay-wrapper">
