@@ -41,22 +41,9 @@ var init_delay_buttons = function() {
     });
 };
 
-var inject_delay_input = function() {
-    jQuery(".status-wc-processing .order-preview").click(function(e) {
-        var modal = jQuery(".wc-backbone-modal-content");
-        var wrapper = modal.find(".wc-order-preview-addresses .wc-order-preview-note");
-        var delay = jQuery("#delay-wrapper");
-
-        delay.appendTo(wrapper);
-        return true;
-    });
-}
-
 jQuery(document).ready(function(e) {
  
     // add event listeners
     init_delay_buttons();
 
-    // inject in modal box when clicked
-    inject_delay_input();
 });

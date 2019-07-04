@@ -67,13 +67,19 @@ jQuery(document).ready(function(e) {
 
 		<?php else : ?>
 
-			<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
-				<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?>
-			</p>
-			<p>
-				<strong>Deine Lieferung wird jetzt vorbereitet, bitte warte noch <span style="color: #f00;"><span class="counter"><?php echo $delay; ?></span> Minuten</span>.</strong><br />
-				<strong>La livraison est en cours de préparation, veuillez patienter <span style="color: #f00;"><span class="counter"><?php echo $delay; ?></span> minutes</span>.</strong>
-			</p>
+			<div style="
+				margin-bottom: 50px;
+				padding: 20px;
+				border: 3px solid #8e0000;
+				border-radius: 5px;">
+				<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
+					<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?>
+				</p>
+				<p style="padding: 0; margin: 0;">
+					<strong>Deine Lieferung wird jetzt vorbereitet, bitte warte noch <span style="color: #f00;"><span class="counter"><?php echo $delay; ?></span> Minuten</span>.</strong><br />
+					<strong>La livraison est en cours de préparation, veuillez patienter <span style="color: #f00;"><span class="counter"><?php echo $delay; ?></span> minutes</span>.</strong>
+				</p>
+			</div>
 			
 			<ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
 
