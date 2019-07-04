@@ -43,6 +43,13 @@ var init_delay_buttons = function() {
     });
 };
 
+var fix_row_click_handlers = function() {
+    jQuery(".delivery_delay").click(function(e) {
+        e.stopPropagation();
+        return false;
+    });
+}
+
 jQuery(document).ready(function(e) {
  
     // add event listeners
