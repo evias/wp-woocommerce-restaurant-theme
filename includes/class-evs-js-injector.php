@@ -62,7 +62,7 @@ EOH;
     /**
      * @brief   Get the delay writer JS script
      * @detail  Get the HTML for injecting the delay writer JS script
-     */
+     /
     public function injectDelayWriter()
     {
         $delay = (new EVS_Delay_Writer)->getCurrentDelay();
@@ -89,5 +89,5 @@ EOA;
 </script>
 EOH;
     }
-
+    */
 }

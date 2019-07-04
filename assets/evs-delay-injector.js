@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-var api_save_delay = function() {
+var api_save_delay = function(postId) {
 
-    let delay = parseInt(jQuery("#delivery-delay-input").val());
+    let delay = parseInt(jQuery(".delivery-delay-input[data-post-id=" + postId + "]").val());
 
     jQuery.ajax({
         url: ajaxurl, // Since WP 2.8 ajaxurl is always defined and points to admin-ajax.php
         data: {
             "action": "save_delay",
-            "delay": delay
+            "delay": delay,
+            "pid": postId
         },
         method: "POST",
         error: function(errorThrown){
@@ -33,9 +34,10 @@ var api_save_delay = function() {
 };
 
 var init_delay_buttons = function() {
-    jQuery("#save-delay").click(function(e) {
+    jQuery(".save-delay").click(function(e) {
 
-        api_save_delay();
+        let postId = parseInt(jQuery(this).attr("data-post-id"));
+        api_save_delay(postId);
 
         return false;
     });

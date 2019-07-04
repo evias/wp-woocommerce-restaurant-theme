@@ -27,10 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class EVS_Delay_Writer {
 
     /**
-     * @brief   Save new delivery delay
-     * @detail  Save a new delivery delay
+     * @brief   Save new delivery global delay
+     * @detail  Save a new delivery global delay
      */
-    public function saveCurrentDelay() 
+    public function saveGlobalDelay() 
     {
         global $wpdb;
 
@@ -38,12 +38,17 @@ class EVS_Delay_Writer {
         $delay = isset($_POST['delay']) ? (int) $_POST['delay'] : 45;
 
         // save latest delay
-        $cnt = $wpdb->update("wp_posts", [
+        $cnt = $wpdb->insert("wp_posts", [
             'post_content' => $delay,
+            'post_status' => 'publish',
+            'comment_status' => 'closed',
+            'ping_status' => 'open',
+            'post_date' => current_time('mysql', 1),
+            'post_date_gmt' => current_time('mysql', 1),
             'post_modified' => current_time('mysql', 1),
             'post_modified_gmt' => current_time('mysql', 1),
-        ], [
-            'ID' => CURRENT_DELAY_POST_ID,
+            'post_type' => 'evs_delay'
+            // no-parent-id to set post_parent = 0
         ]);
 
         if ($cnt === false || !$cnt) {
@@ -54,10 +59,43 @@ class EVS_Delay_Writer {
     }
 
     /**
-     * @brief   Get delivery delay
-     * @detail  Read latest delivery delay
+     * @brief   Save new delivery delay for a Post ID
+     * @detail  Save a new delivery delay for a Post ID
      */
-    public function getCurrentDelay() 
+    public function saveDelayForPost() 
+    {
+        global $wpdb;
+
+        // read delay from request
+        $delay = isset($_POST['delay']) ? (int) $_POST['delay'] : 45;
+        $postId = isset($_POST['pid']) ? (int) $_POST['pid'] : 0;
+
+        // save latest delay
+        $cnt = $wpdb->insert("wp_posts", [
+            'post_content' => $delay,
+            'post_status' => 'publish',
+            'comment_status' => 'closed',
+            'ping_status' => 'open',
+            'post_date' => current_time('mysql', 1),
+            'post_date_gmt' => current_time('mysql', 1),
+            'post_modified' => current_time('mysql', 1),
+            'post_modified_gmt' => current_time('mysql', 1),
+            'post_parent' => $postId,
+            'post_type' => 'evs_delay'
+        ]);
+
+        if ($cnt === false || !$cnt) {
+            return EVS_API_Response::sendResponse(['status' => 'error', 'message' => 'Could not update delivery delay.']);
+        }
+
+        return EVS_API_Response::sendResponse(['status' => 'OK']);
+    }
+
+    /**
+     * @brief   Get delivery delay for said Post
+     * @detail  Read latest delivery delay for said Post (or global)
+     */
+    public function getCurrentDelay($postId) 
     {
         global $wpdb;
 
@@ -67,7 +105,23 @@ class EVS_Delay_Writer {
             FROM {$wpdb->prefix}posts 
             WHERE 
                 post_type = 'evs_delay'
+                AND post_parent = " . $postId . "
+            ORDER BY post_date DESC
+            LIMIT 1
         ", OBJECT );
+
+        if (empty($results)) {
+            // retry for global delay
+            $results = $wpdb->get_results("
+                SELECT post_content as current_delay
+                FROM {$wpdb->prefix}posts 
+                WHERE 
+                    post_type = 'evs_delay'
+                    AND post_parent = 0
+                ORDER BY post_date DESC
+                LIMIT 1
+            ", OBJECT );
+        }
 
         $delay = 45;
         if (!empty($results)) {
