@@ -55,4 +55,7 @@ jQuery(document).ready(function(e) {
     // add event listeners
     init_delay_buttons();
 
+    // fix woocommerce row click handler
+    fix_row_click_handlers();
+
 });
