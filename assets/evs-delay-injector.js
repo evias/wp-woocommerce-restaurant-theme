@@ -48,14 +48,16 @@ var fix_row_click_handlers = function() {
         e.stopPropagation();
         return false;
     });
-}
+};
 
 jQuery(document).ready(function(e) {
- 
-    // add event listeners
-    init_delay_buttons();
 
-    // fix woocommerce row click handler
-    fix_row_click_handlers();
+    setTimeout(function() {
+        // fix woocommerce row click handler
+        fix_row_click_handlers();
+
+        // add event listeners
+        init_delay_buttons();
+    }, 3500);
 
 });
