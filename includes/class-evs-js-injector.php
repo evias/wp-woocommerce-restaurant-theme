@@ -34,28 +34,58 @@ class EVS_JS_Injector {
     {
         // <iframe src="/wp-content/uploads/2019/01/new.wav" allow="autoplay" style="display:none" id="order-alarm-iframe"></iframe> 
         echo <<<EOA
-<br />
-<hr />
-<br />
-<div>
+<style type="text/css">
+#alarm-wrapper {
+    position: absolute;
+    bottom: 30px;
+}
+</style>
+<div id="alarm-wrapper">
     <button id="alarm-activate">Starten</button>
     <span> - </span>
     <button id="alarm-deactivate">Alarm Pause</button>
 </div>
-<br />
-<hr />
-<br />
-
 <audio id="order-alarm" webkit-playsinline="true" playsinline="true" loop>
     <source src="https://beta.da-antonio.be/wp-content/uploads/2019/01/new.wav" type="audio/wav">
     Your browser does not support the audio element.
 </audio>
 EOA;
 
-        $javascriptSourceCode = file_get_contents(dirname(__FILE__) . "/../assets/evs-order-inspector.js");
+        $javascriptSourceCodeOrder = file_get_contents(dirname(__FILE__) . "/../assets/evs-order-inspector.js");
         echo <<<EOH
 <script>
-{$javascriptSourceCode}
+{$javascriptSourceCodeOrder}
+</script>
+EOH;
+    }
+
+    /**
+     * @brief   Get the delay writer JS script
+     * @detail  Get the HTML for injecting the delay writer JS script
+     */
+    public function injectDelayWriter()
+    {
+        $delay = (new EVS_Delay_Writer)->getCurrentDelay();
+
+        echo <<<EOA
+<style type="text/css">
+#delay-wrapper {
+    position: absolute;
+    bottom: 30px;
+    left: 150px;
+}
+</style>
+<div id="delay-wrapper">
+    <input type="text" id="delivery-delay-input" value="{$delay}" />
+    <span> (Minuten) </span>
+    <button id="save-delay">Speichern</button>
+</div>
+EOA;
+
+        $javascriptSourceCodeDelay = file_get_contents(dirname(__FILE__) . "/../assets/evs-delay-injector.js");
+        echo <<<EOH
+<script>
+{$javascriptSourceCodeDelay}
 </script>
 EOH;
     }
