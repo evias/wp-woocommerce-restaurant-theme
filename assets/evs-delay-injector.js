@@ -52,12 +52,10 @@ var fix_row_click_handlers = function() {
 
 jQuery(document).ready(function(e) {
 
-    setTimeout(function() {
-        // fix woocommerce row click handler
-        fix_row_click_handlers();
+    // fix woocommerce row click handler
+    fix_row_click_handlers();
 
-        // add event listeners
-        init_delay_buttons();
-    }, 3500);
+    // add event listeners
+    init_delay_buttons();
 
 });
