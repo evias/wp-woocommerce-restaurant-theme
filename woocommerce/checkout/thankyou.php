@@ -23,6 +23,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 $delay = (new EVS_Delay_Writer)->getCurrentDelay();
 ?>
 
+<script>
+jQuery(document).ready(function(e) {
+
+	// get total time to wait
+	let total = parseInt(jQuery(".counter").first().text());
+
+	let int_delay = setInterval(function() {
+		jQuery(".counter").each(function(at) {
+			let current = jQuery(this);
+			let counter = parseInt(current.text());
+
+			counter--;
+			if (counter < 0) {
+				counter = 0;
+			}
+
+			current.html('' + counter);
+		});
+	}, 60000);
+
+	// clear interval when counter is done
+	setTimeout(function() {
+		clearInterval(int_delay);
+	}, (total * 60000) + 10000);
+});
+</script>
+
 <div class="woocommerce-order">
 
 	<?php if ( $order ) : ?>
@@ -40,14 +67,14 @@ $delay = (new EVS_Delay_Writer)->getCurrentDelay();
 
 		<?php else : ?>
 
-			<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
 			<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
-				<strong>Deine Lieferung wird jetzt vorbereitet, bitte warte noch <?php echo $delay; ?> Minuten.</strong><br />
-				<strong>Votre livraison est en cours de préparation, veuillez patienter <?php echo $delay; ?> minutes.</strong>
+				<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?>
+			</p>
+			<p>
+				<strong>Deine Lieferung wird jetzt vorbereitet, bitte warte noch <span style="color: #f00;"><span class="counter"><?php echo $delay; ?></span> Minuten</span>.</strong><br />
+				<strong>La livraison est en cours de préparation, veuillez patienter <span style="color: #f00;"><span class="counter"><?php echo $delay; ?></span> minutes</span>.</strong>
 			</p>
 			
-			<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
-
 			<ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
 
 				<li class="woocommerce-order-overview__order order">
