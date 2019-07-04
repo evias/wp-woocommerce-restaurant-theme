@@ -20,7 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$delay = (new EVS_Delay_Writer)->getCurrentDelay();
+global $post;
+
+$delay = (new EVS_Delay_Writer)->getCurrentDelay($post->ID);
 ?>
 
 <script>
