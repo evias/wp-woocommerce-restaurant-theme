@@ -94,7 +94,17 @@ EOA;
     }
 }
 
-add_filter( 'manage_edit-shop_order_columns', 'evs_add_delivery_delay_column_header', 20);
-add_action( 'manage_shop_order_posts_custom_column', 'evs_add_delivery_delay_column_content');
+/**
+ * Adjusts the styles for the new delivery_delay column.
+ */
+function evs_add_delivery_delay_column_styles() {
+
+    $css = '.delivery_delay.column-delivery_delay { width: 20%; }';
+    wp_add_inline_style('woocommerce_admin_styles', $css);
+}
+
+add_filter('manage_edit-shop_order_columns', 'evs_add_delivery_delay_column_header', 20);
+add_action('manage_shop_order_posts_custom_column', 'evs_add_delivery_delay_column_content');
+add_action('admin_print_styles', 'evs_add_delivery_delay_column_styles');
 
 ?>
