@@ -87,14 +87,14 @@ class EVS_Status_Listener {
         // check for holiday period
         $isHoliday = 
             (
-                ($year = $currentDate->format("Y")) === HOLIDAY_YEAR_START
+                ($year = (int)$currentDate->format("Y")) === HOLIDAY_YEAR_START
                 && ((
-                    ($mon = $currentDate->format("n")) === HOLIDAY_MONTH_START
-                    && ($day = $currentDate->format("j")) >= HOLIDAY_DAY_START
+                    ($mon = (int)$currentDate->format("n")) === HOLIDAY_MONTH_START
+                    && ($day = (int)$currentDate->format("j")) >= HOLIDAY_DAY_START
                     && (HOLIDAY_MONTH_END > $mon || $day <= HOLIDAY_DAY_END)
                 ) || (
-                    ($mon = $currentDate->format("n")) === HOLIDAY_MONTH_END
-                    && ($day = $currentDate->format("j")) <= HOLIDAY_DAY_END
+                    ($mon = (int)$currentDate->format("n")) === HOLIDAY_MONTH_END
+                    && ($day = (int)$currentDate->format("j")) <= HOLIDAY_DAY_END
                     && (HOLIDAY_MONTH_START < $mon || $day >= HOLIDAY_DAY_START)
                 ))
             );
