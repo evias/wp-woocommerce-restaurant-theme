@@ -20,7 +20,17 @@
  * 
  * @since 1.0.0
  */
-define("SCHEDULER_POST_ID", 735);
+defined("SCHEDULER_POST_ID") || define("SCHEDULER_POST_ID", 735);
+defined("HOLIDAY_POST_ID") || define("HOLIDAY_POST_ID", 1754);
+
+// :warning: Define holiday schedule!!
+// Yearly summer holiday : 22.07.2019 to 08.08.2019
+defined("HOLIDAY_YEAR_START") || define("HOLIDAY_YEAR_START", 2019);
+defined("HOLIDAY_YEAR_END") || define("HOLIDAY_YEAR_END", 2019);
+defined("HOLIDAY_MONTH_START") || define("HOLIDAY_MONTH_START", 7);
+defined("HOLIDAY_MONTH_END") || define("HOLIDAY_MONTH_END", 8);
+defined("HOLIDAY_DAY_START") || define("HOLIDAY_DAY_START", 22);
+defined("HOLIDAY_DAY_END") || define("HOLIDAY_DAY_END", 8);
 
 // Include child theme source
 require_once dirname( __FILE__ ) . '/includes/class-evs-api-response.php';

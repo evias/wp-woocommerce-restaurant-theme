@@ -27,17 +27,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class EVS_Status_Listener {
 
     /**
-     * @brief   Get status of delivery
-     * @detail  Get true or false when delivery is respectively active or inactive
+     * @brief   Read scheduler settings
+     * @detail  
      */
-    public function isDelivering($request) 
+    protected function getSchedule($postId = SCHEDULER_POST_ID)
     {
         global $wpdb;
 
-        // Read scheduler configuration
-        $results = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . SCHEDULER_POST_ID, OBJECT );
-        $status = false;
         $schedule = null;
+        $results = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = " . $postId, OBJECT );
         for ($i = 0, $m = count($results); $i < $m; $i++) {
             if ($results[$i]->meta_key !== "woc_hours_meta") {
                 continue;
@@ -46,6 +44,23 @@ class EVS_Status_Listener {
             $schedule = unserialize($results[$i]->meta_value);
             break;
         }
+
+        return $schedule;
+    }
+
+    /**
+     * @brief   Get status of delivery
+     * @detail  Get true or false when delivery is respectively active or inactive
+     */
+    public function isDelivering($request) 
+    {
+        global $wpdb;
+
+        // Holidays ..
+        $scheduleHoliday = $this->getSchedule(HOLIDAY_POST_ID);
+
+        // Read scheduler configuration
+        $schedule = $this->getSchedule(SCHEDULER_POST_ID);
 
         if (empty($schedule)) {
             return EVS_API_Response::sendResponse(['status' => true, "message" => "ok"]);
@@ -68,6 +83,25 @@ class EVS_Status_Listener {
         $currentDay  = $currentDate->format("D"); // textual representation of a day, three letters
         $currentHour = (int) $currentDate->format("G"); // 24-hour format without leading 0
         $currentMins = (int) $currentDate->format("i");
+
+        // check for holiday period
+        $isHoliday = 
+            (
+                ($year = $currentDate->format("Y")) === HOLIDAY_YEAR_START
+                && ((
+                    ($mon = $currentDate->format("n")) === HOLIDAY_MONTH_START
+                    && ($day = $currentDate->format("j")) >= HOLIDAY_DAY_START
+                    && (HOLIDAY_MONTH_END > $mon || $day <= HOLIDAY_DAY_END)
+                ) || (
+                    ($mon = $currentDate->format("n")) === HOLIDAY_MONTH_END
+                    && ($day = $currentDate->format("j")) <= HOLIDAY_DAY_END
+                    && (HOLIDAY_MONTH_START < $mon || $day >= HOLIDAY_DAY_START)
+                ))
+            );
+
+        if (true === $isHoliday) {
+            return EVS_API_Response::sendResponse(['status' => false, "message" => $scheduleHoliday["woc_message"]]);
+        }
 
         // read today's schedule
         $scheduleToday = isset($schedule[$daysId[$currentDay]]) ? array_shift($schedule[$daysId[$currentDay]]) : false;
